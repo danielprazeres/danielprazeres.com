@@ -242,7 +242,6 @@ function checkLanguage() {
   if (languageCookie && document.documentElement.lang !== languageCookie) {
     // Verifique se estamos na página principal sem o index.html
     if (languagePath === "/" || languagePath === "/index.html") {
-      // Redireciona para a versão do idioma do cookie
       window.location.href = 'index-' + languageCookie + '.html';
     }
   }
