@@ -33,6 +33,34 @@ h6 {
   font-family: "Raleway", sans-serif;
 }
 
+#language-selector {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  background-color: #fff; /* Ajuste para combinar com o seu tema */
+  color: #333; /* Ajuste para combinar com o seu tema */
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc; /* Opcional, dependendo do estilo do seu site */
+}
+
+#language-selector select {
+  border: none;
+  outline: none;
+  margin-right: 5px;
+  color: inherit;
+  background: transparent;
+  font-size: inherit;
+  -webkit-appearance: none; /* Remove estilo padrão do select no Chrome */
+  -moz-appearance: none; /* Remove estilo padrão do select no Firefox */
+}
+
+#language-selector .bx-globe {
+  font-size: 20px; /* Ajuste o tamanho conforme necessário */
+  color: inherit;
+}
+
+
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
@@ -145,6 +173,7 @@ h6 {
 /*--------------------------------------------------------------
 # Navigation Menu
 --------------------------------------------------------------*/
+
 /**
 * Desktop Navigation 
 */
@@ -159,7 +188,7 @@ h6 {
   list-style: none;
 }
 
-.nav-menu>ul>li {
+.nav-menu > ul > li {
   position: relative;
   white-space: nowrap;
 }
@@ -178,7 +207,6 @@ h6 {
   height: 56px;
   width: 100%;
   overflow: hidden;
-  transition: 0.3s;
 }
 
 .nav-menu a i,
@@ -193,7 +221,6 @@ h6 {
 }
 
 @media (min-width: 992px) {
-
   .nav-menu a,
   .nav-menu a:focus {
     width: 56px;
@@ -202,14 +229,13 @@ h6 {
   .nav-menu a span,
   .nav-menu a:focus span {
     display: none;
-    color: #fff;
   }
 }
 
 .nav-menu a:hover,
 .nav-menu .active,
 .nav-menu .active:focus,
-.nav-menu li:hover>a {
+.nav-menu li:hover > a {
   color: #fff;
   background: #0563bb;
 }
@@ -217,18 +243,18 @@ h6 {
 .nav-menu a:hover span,
 .nav-menu .active span,
 .nav-menu .active:focus span,
-.nav-menu li:hover>a span {
+.nav-menu li:hover > a span {
   color: #fff;
 }
 
 .nav-menu a:hover,
-.nav-menu li:hover>a {
+.nav-menu li:hover > a {
   width: 100%;
   color: #fff;
 }
 
 .nav-menu a:hover span,
-.nav-menu li:hover>a span {
+.nav-menu li:hover > a span {
   display: block;
 }
 
@@ -266,6 +292,80 @@ h6 {
 .mobile-nav-active .mobile-nav-toggle {
   color: #fff;
   background-color: #0563bb;
+}
+
+/* Dropdown Style */
+.nav-menu .dropdown {
+  position: relative;
+}
+
+.nav-menu .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%; /* Ajusta a posição para que fique diretamente abaixo do toggle */
+  left: 0;
+  margin-top: 0; /* Remove a margem entre o toggle e o menu, se necessário */
+  border: none;
+  border-radius: 0.25rem;
+  background: #f2f3f5;
+  box-shadow: 0 2px 5px rgba(0,0,0,.1);
+  padding: 0.5rem 0;
+  min-width: 10rem;
+}
+
+.nav-menu .dropdown-menu {
+  transition: visibility 0.5s, opacity 0.5s linear;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.nav-menu .dropdown-menu a {
+  padding: 10px 18px;
+  height: auto; /* Remova height se estiver definido para um valor fixo */
+  width: auto; /* Ou defina um valor mínimo de largura conforme necessário */
+  color: #45505b;
+  text-align: left;
+  transition: color 0.3s;
+  display: block;
+}
+
+.nav-menu .dropdown-menu a:hover {
+  background-color: #0563bb;
+  color: #fff;
+}
+
+.nav-menu .dropdown:hover .dropdown-menu {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Adiciona uma seta para o botão de dropdown no modo desktop */
+@media (min-width: 992px) {
+  .nav-menu .dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+  }
+
+  .nav-menu .dropdown-toggle {
+    pointer-events: none;
+  }
+
+  .nav-menu .dropdown:hover > .dropdown-toggle {
+    background: #0563bb;
+    color: #fff;
+  }
+
+  .nav-menu .dropdown:hover > .dropdown-toggle span {
+    color: #fff;
+    display: inline;
+  }
 }
 
 /*--------------------------------------------------------------

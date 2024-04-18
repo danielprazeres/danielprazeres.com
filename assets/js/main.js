@@ -1,149 +1,109 @@
-/**
-* Template Name: MyResume
-* Template URL: https://bootstrapmade.com/free-html-bootstrap-template-my-resume/
-* Updated: Mar 17 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-
 (function() {
   "use strict";
 
-  /**
-   * Easy selector helper function
-   */
+  // Funções auxiliares para seleção e eventos
   const select = (el, all = false) => {
-    el = el.trim()
-    if (all) {
-      return [...document.querySelectorAll(el)]
-    } else {
-      return document.querySelector(el)
-    }
-  }
+    el = el.trim();
+    return all ? [...document.querySelectorAll(el)] : document.querySelector(el);
+  };
 
-  /**
-   * Easy event listener function
-   */
   const on = (type, el, listener, all = false) => {
-    let selectEl = select(el, all)
+    let selectEl = select(el, all);
     if (selectEl) {
-      if (all) {
-        selectEl.forEach(e => e.addEventListener(type, listener))
-      } else {
-        selectEl.addEventListener(type, listener)
-      }
+      const applyListener = elem => elem.addEventListener(type, listener);
+      all ? selectEl.forEach(applyListener) : applyListener(selectEl);
     }
-  }
+  };
 
-  /**
-   * Easy on scroll event listener 
-   */
   const onscroll = (el, listener) => {
-    el.addEventListener('scroll', listener)
-  }
+    el.addEventListener('scroll', listener);
+  };
 
-  /**
-   * Navbar links active state on scroll
-   */
-  let navbarlinks = select('#navbar .scrollto', true)
+  // Gerenciamento de estado ativo dos links da barra de navegação
+  let navbarlinks = select('#navbar .scrollto', true);
   const navbarlinksActive = () => {
-    let position = window.scrollY + 200
+    let position = window.scrollY + 200;
     navbarlinks.forEach(navbarlink => {
-      if (!navbarlink.hash) return
-      let section = select(navbarlink.hash)
-      if (!section) return
+      if (!navbarlink.hash) return;
+      let section = select(navbarlink.hash);
+      if (!section) return;
       if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
-        navbarlink.classList.add('active')
+        navbarlink.classList.add('active');
       } else {
-        navbarlink.classList.remove('active')
+        navbarlink.classList.remove('active');
       }
-    })
-  }
-  window.addEventListener('load', navbarlinksActive)
-  onscroll(document, navbarlinksActive)
+    });
+  };
 
-  /**
-   * Scrolls to an element with header offset
-   */
+  window.addEventListener('load', navbarlinksActive);
+  onscroll(document, navbarlinksActive);
+
+  // Função para rolagem suave
   const scrollto = (el) => {
-    let elementPos = select(el).offsetTop
+    let elementPos = select(el).offsetTop;
     window.scrollTo({
       top: elementPos,
       behavior: 'smooth'
-    })
-  }
+    });
+  };
 
-  /**
-   * Back to top button
-   */
-  let backtotop = select('.back-to-top')
+  // Botão de voltar ao topo
+  let backtotop = select('.back-to-top');
   if (backtotop) {
     const toggleBacktotop = () => {
       if (window.scrollY > 100) {
-        backtotop.classList.add('active')
+        backtotop.classList.add('active');
       } else {
-        backtotop.classList.remove('active')
+        backtotop.classList.remove('active');
       }
-    }
-    window.addEventListener('load', toggleBacktotop)
-    onscroll(document, toggleBacktotop)
+    };
+    window.addEventListener('load', toggleBacktotop);
+    onscroll(document, toggleBacktotop);
   }
 
-  /**
-   * Mobile nav toggle
-   */
+  // Toggle do menu mobile
   on('click', '.mobile-nav-toggle', function(e) {
-    select('body').classList.toggle('mobile-nav-active')
-    this.classList.toggle('bi-list')
-    this.classList.toggle('bi-x')
-  })
+    select('body').classList.toggle('mobile-nav-active');
+    this.classList.toggle('bi-list');
+    this.classList.toggle('bi-x');
+  });
 
-  /**
-   * Scrool with ofset on links with a class name .scrollto
-   */
+  // Navegação com offset para links .scrollto
   on('click', '.scrollto', function(e) {
     if (select(this.hash)) {
-      e.preventDefault()
-
-      let body = select('body')
+      e.preventDefault();
+      let body = select('body');
       if (body.classList.contains('mobile-nav-active')) {
-        body.classList.remove('mobile-nav-active')
-        let navbarToggle = select('.mobile-nav-toggle')
-        navbarToggle.classList.toggle('bi-list')
-        navbarToggle.classList.toggle('bi-x')
+        body.classList.remove('mobile-nav-active');
+        let navbarToggle = select('.mobile-nav-toggle');
+        navbarToggle.classList.toggle('bi-list');
+        navbarToggle.classList.toggle('bi-x');
       }
-      scrollto(this.hash)
+      scrollto(this.hash);
     }
-  }, true)
+  }, true);
 
-  /**
-   * Scroll with ofset on page load with hash links in the url
-   */
+  // Carrega a página com offset se tiver hash na URL
   window.addEventListener('load', () => {
     if (window.location.hash) {
       if (select(window.location.hash)) {
-        scrollto(window.location.hash)
+        scrollto(window.location.hash);
       }
     }
   });
 
-  /**
-   * Preloader
-   */
+  // Preloader
   let preloader = select('#preloader');
   if (preloader) {
     window.addEventListener('load', () => {
-      preloader.remove()
+      preloader.remove();
     });
   }
 
-  /**
-   * Hero type effect
-   */
-  const typed = select('.typed')
+  // Efeito de digitação no cabeçalho
+  const typed = select('.typed');
   if (typed) {
-    let typed_strings = typed.getAttribute('data-typed-items')
-    typed_strings = typed_strings.split(',')
+    let typed_strings = typed.getAttribute('data-typed-items').split(',');
     new Typed('.typed', {
       strings: typed_strings,
       loop: true,
@@ -153,9 +113,7 @@
     });
   }
 
-  /**
-   * Skills animation
-   */
+  // Animação das habilidades ao entrar na viewport
   let skilsContent = select('.skills-content');
   if (skilsContent) {
     new Waypoint({
@@ -163,16 +121,12 @@
       offset: '80%',
       handler: function(direction) {
         let progress = select('.progress .progress-bar', true);
-        progress.forEach((el) => {
-          el.style.width = el.getAttribute('aria-valuenow') + '%'
-        });
+        progress.forEach(el => el.style.width = el.getAttribute('aria-valuenow') + '%');
       }
-    })
+    });
   }
 
-  /**
-   * Porfolio isotope and filter
-   */
+  // Isotope e filtro do portfólio
   window.addEventListener('load', () => {
     let portfolioContainer = select('.portfolio-container');
     if (portfolioContainer) {
@@ -181,44 +135,34 @@
       });
 
       let portfolioFilters = select('#portfolio-flters li', true);
-
       on('click', '#portfolio-flters li', function(e) {
         e.preventDefault();
-        portfolioFilters.forEach(function(el) {
-          el.classList.remove('filter-active');
-        });
+        portfolioFilters.forEach(el => el.classList.remove('filter-active'));
         this.classList.add('filter-active');
 
         portfolioIsotope.arrange({
           filter: this.getAttribute('data-filter')
         });
         portfolioIsotope.on('arrangeComplete', function() {
-          AOS.refresh()
+          AOS.refresh();
         });
       }, true);
     }
-
   });
 
-  /**
-   * Initiate portfolio lightbox 
-   */
+  // Lightbox para o portfólio
   const portfolioLightbox = GLightbox({
     selector: '.portfolio-lightbox'
   });
 
-  /**
-   * Initiate portfolio details lightbox 
-   */
+  // Lightbox para detalhes do portfólio
   const portfolioDetailsLightbox = GLightbox({
     selector: '.portfolio-details-lightbox',
     width: '90%',
     height: '90vh'
   });
 
-  /**
-   * Portfolio details slider
-   */
+  // Slider de detalhes do portfólio
   new Swiper('.portfolio-details-slider', {
     speed: 400,
     loop: true,
@@ -233,9 +177,7 @@
     }
   });
 
-  /**
-   * Testimonials slider
-   */
+  // Slider de depoimentos
   new Swiper('.testimonials-slider', {
     speed: 600,
     loop: true,
@@ -251,21 +193,52 @@
     }
   });
 
-  /**
-   * Animation on scroll
-   */
+  // Animação ao rolar a página
   window.addEventListener('load', () => {
     AOS.init({
       duration: 1000,
       easing: 'ease-in-out',
       once: true,
       mirror: false
-    })
+    });
   });
 
-  /**
-   * Initiate Pure Counter 
-   */
+  // Inicializa o contador
   new PureCounter();
+})();
 
-})()
+// Funções de manipulação de idioma e cookies
+function changeLanguage(language) {
+  setCookie('language', language, 30);
+  window.location.href = language === 'es' ? 'index-es.html' : 'index.html';
+}
+
+function setCookie(name, value, days) {
+  var expires = "";
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+function getCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') c = c.substring(1);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
+
+function checkLanguage() {
+  var language = getCookie('language');
+  if (language && window.location.href.indexOf(language) === -1) {
+    changeLanguage(language);
+  }
+}
+
+window.onload = checkLanguage;
