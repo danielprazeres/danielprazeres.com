@@ -235,10 +235,17 @@ function getCookie(name) {
 }
 
 function checkLanguage() {
-  var language = getCookie('language');
-  if (language && window.location.href.indexOf(language) === -1) {
-    changeLanguage(language);
+  var languageCookie = getCookie('language');
+  var languagePath = window.location.pathname;
+
+  // Verifique se o cookie de idioma existe e é diferente do idioma atual do documento
+  if (languageCookie && document.documentElement.lang !== languageCookie) {
+    // Verifique se estamos na página principal sem o index.html
+    if (languagePath === "/" || languagePath === "/index.html") {
+      // Redireciona para a versão do idioma do cookie
+      window.location.href = 'index-' + languageCookie + '.html';
+    }
   }
 }
 
-window.onload = checkLanguage;
+window.addEventListener('load', checkLanguage);
