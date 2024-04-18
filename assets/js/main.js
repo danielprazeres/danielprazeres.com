@@ -236,15 +236,17 @@ function getCookie(name) {
 
 function checkLanguage() {
   var languageCookie = getCookie('language');
-  var languagePath = window.location.pathname;
+  var currentPage = window.location.href.split('/').pop(); // Obtém a parte final do URL (por exemplo, index.html)
 
-  // Verifique se o cookie de idioma existe e é diferente do idioma atual do documento
-  if (languageCookie && document.documentElement.lang !== languageCookie) {
-    // Verifique se estamos na página principal sem o index.html
-    if (languagePath === "/" || languagePath === "/index.html") {
-      window.location.href = 'index-' + languageCookie + '.html';
-    }
+  // Constrói o nome do arquivo esperado com base no cookie do idioma
+  var expectedPage = languageCookie === 'es' ? 'index-es.html' : 'index.html';
+
+  // Se o cookie de idioma existe e é diferente da página atual
+  if (languageCookie && currentPage !== expectedPage) {
+    // Redireciona para a versão do idioma do cookie
+    window.location.href = expectedPage;
   }
 }
 
 window.addEventListener('load', checkLanguage);
+
